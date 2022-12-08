@@ -1,0 +1,47 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: app-deployment-movement
+  labels:
+    app: service-movement
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: service-movement
+  template:
+    metadata:
+      labels:
+        app: service-movement
+    spec:
+      containers:
+      - name: app-movement
+        image: valentinareinoso/aforo255-nodejs-movement-vrr:latest
+        ports:
+        - containerPort: 5005
+        env:
+        - name: NACOS_SERVERADDR
+          value: "165.227.250.67:8848"
+        - name: NACOS_NAMESPACE
+          value: "aforo255"
+        - name: NACOS_IDENTITYKEY
+          value: "nacos"
+        - name: NACOS_IDENTITYVALUE
+          value: "nacos"
+        - name: NACOS_ENV
+          value: "PROD"
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: app-service-movement
+spec:
+  type: LoadBalancer
+  selector:
+    app: service-movement
+  ports:
+  - protocol: TCP
+    port: 8080
+    targetPort: 5005
+    name: http
+ 
