@@ -1,15 +1,15 @@
 name: Release Docker Image
- 
+
 on:
   push:
     branches: [ release ]
   pull_request:
     branches: [ release ]
- 
+
 env:
   DOCKER_HUB_USER: ${{ secrets.DOCKER_HUB_USER }}
   DOCKER_IMAGE_NAME: aforo255-nodejs-movement-vrr
- 
+
 jobs:
   docker:
     name: CI Release
